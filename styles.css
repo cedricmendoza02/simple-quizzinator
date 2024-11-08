@@ -1,0 +1,45 @@
+body {
+    font-size: 1.2rem;
+    background-color: beige;
+}
+
+/* main {
+    display: flex;
+    flex-direction: column;
+} */
+
+.Card {
+    width: 80vw;
+    height: fit-content;
+    padding: 1vw;
+    margin: 1vw;
+}
+
+.incorrect {
+    color: red;
+    font-size: 1.1em;
+}
+
+.cardContainer {
+    border: 1px solid black;
+    border-radius: 5px 5px;
+    margin: 1.2em;
+    padding: 0.5em;
+}
+
+.answersContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    margin: 10px 0;
+}
+
+button {
+    font-size: 1.2em;
+}
+
+p {
+    line-height: 2em;
+}
