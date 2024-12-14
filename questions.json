@@ -3,7 +3,7 @@
         "instructions": "Sentence or non-sentence(Phrase)",
         "questions": [
             {
-                "q": "The book is thick",
+                "q": "The book is thick.",
                 "correctAns": 0,
                 "answer": -1,
                 "answers": ["Sentence", "Non-Sentence(Phrase)"]
