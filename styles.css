@@ -1,12 +1,38 @@
-body {
-    font-size: 1.2rem;
-    background-color: beige;
+main {
+    height: 100vh;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
-/* main {
+body {
+    font-size: 1.2rem;
+    background-color: #ffffbf;
+}
+
+#subjects {
+    padding: 0;
+    margin: auto;
+    width: 80vw;
     display: flex;
+    list-style: none;
     flex-direction: column;
-} */
+    height: inherit;
+    align-items: center;
+    justify-content: space-around;
+}
+
+#subjects li {
+    height: 100%;
+    width: 100%;
+    color: #612E37;
+    font-size: 32px;
+    box-shadow: 5px 5px black;
+    border-radius: 5px;
+    background-color: #FED172;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 10px 0px;
+}
 
 .Card {
     width: 80vw;
