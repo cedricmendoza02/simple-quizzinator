@@ -7,18 +7,28 @@
 }
 */
 
-async function getData() {
-    let res = await fetch('./questions.json');
-    let questions = await res.json();
-    return questions;
+let main = document.querySelector("main");
+
+let subjects = document.querySelector("#subjects");
+subjects.addEventListener("click", e => {
+    let target = e.target.innerText.toLowerCase();
+    selectSubject(target);
+})
+
+function selectSubject(subject) {
+    renderQuestions(subject);
 }
 
-async function startRender() {
-    let questions = await getData();
-    let main = document.querySelector("main");
+async function getData(subject) {
+    let res = await fetch('https://cedricmendoza02.github.io/questionnaire_api/questionnaire.json');
+    let questions = await res.json();
+    return questions["grade_1"][subject]; // grade_1 only for now. Option to select other grades will be added eventually.
+}
 
-    // let current = questions.synonyms;
-    let questionTypes = Object.keys(questions)
+async function renderQuestions(subject) {
+    main.innerHTML = "";
+    let questions = await getData(subject);
+    let questionTypes = Object.keys(questions);
 
     for(let x = 0; x < questionTypes.length; x++) {
         let currentQuestionType = questionTypes[x];
@@ -114,4 +124,5 @@ async function startRender() {
     }
 } 
 
-startRender();
+
+// renderQuestions('english');
