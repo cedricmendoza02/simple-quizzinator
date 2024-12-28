@@ -3,6 +3,10 @@ main {
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
+main h2 {
+    word-wrap: break-word;
+}
+
 body {
     font-size: 1.2rem;
     background-color: #ffffbf;
@@ -34,13 +38,6 @@ body {
     margin: 10px 0px;
 }
 
-.Card {
-    width: 80vw;
-    height: fit-content;
-    padding: 1vw;
-    margin: 1vw;
-}
-
 .incorrect {
     color: red;
     font-size: 1.1em;
@@ -51,6 +48,10 @@ body {
     border-radius: 5px 5px;
     margin: 1.2em;
     padding: 0.5em;
+}
+
+.cardContainer p {
+    margin: 0;
 }
 
 .answersContainer {
