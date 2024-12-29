@@ -27,12 +27,23 @@ async function getData(subject) {
 
 async function renderQuestions(subject) {
     main.innerHTML = "";
-    let questions = await getData(subject);
-    let questionTypes = Object.keys(questions);
+    /* returns questionnaires for specific subjects in form:
+        {
+            "subject": {
+                "questionType": {
+                    "instructions":"",
+                    "questions": [{...}],
+                    "score"
+                }
+            }
+        }
+    */
+    let questions = await getData(subject); 
+    let subjectTopic = Object.keys(questions);
 
-    for(let x = 0; x < questionTypes.length; x++) {
-        let currentQuestionType = questionTypes[x];
-        let current = questions[currentQuestionType].questions; // Get the questions properties of the questions types object
+    for(let x = 0; x < subjectTopic.length; x++) {
+        let currentSubjectTopic = subjectTopic[x];
+        let current = questions[currentSubjectTopic].questions; // Get the questions properties of the questions types object
         let section = document.createElement("h2");
         let instructions = document.createElement("p");
         let checkBtn = document.createElement("button");
@@ -43,35 +54,38 @@ async function renderQuestions(subject) {
         checkBtn.setAttribute("id", `check${x}`)
         checkBtn.addEventListener("click", (e) => {
             // get a reference to the section property from the questions object
-            let curQuestion = questions[currentQuestionType].questions;
-            let items = document.querySelectorAll(`p[class*=${currentQuestionType}]`);
+            let curQuestion = questions[currentSubjectTopic].questions;
+            let items = document.querySelectorAll(`p[class*=${currentSubjectTopic}]`);
             let incorrectAnswersIndex = [];
-            questions[currentQuestionType].score = 0;
+            questions[currentSubjectTopic].score = 0;
+
+            // remove classlist incorrect before answer check
             for(let i = 0; i < items.length; i++) {
                 items[i].classList.remove("incorrect")
             }
 
             // loop through the questions on the parent section
             for(let i = 0; i < curQuestion.length; i++) {
+                // compare the selection to the correct answer
                 let checkAns = curQuestion[i].answer == curQuestion[i].correctAns;
                 if(checkAns) {
-                    questions[currentQuestionType].score += 1
+                    questions[currentSubjectTopic].score += 1
                 } else {
                     incorrectAnswersIndex.push(i);
                 }
             }
 
             for(let i = 0; i < incorrectAnswersIndex.length; i++) {
-                let incorrectItems = document.querySelector(`.${currentQuestionType}${incorrectAnswersIndex[i]}`)
+                let incorrectItems = document.querySelector(`.${currentSubjectTopic}${incorrectAnswersIndex[i]}`)
                 incorrectItems.classList.add("incorrect")
             }
             
-            result.innerHTML = `${questions[currentQuestionType].score}/${curQuestion.length}`;
+            result.innerHTML = `${questions[currentSubjectTopic].score}/${curQuestion.length}`;
 
         })
 
-        section.innerHTML = currentQuestionType.toUpperCase();
-        instructions.innerHTML = questions[questionTypes[x]].instructions;
+        section.innerHTML = currentSubjectTopic.toUpperCase();
+        instructions.innerHTML = questions[subjectTopic[x]].instructions;
         
         main.appendChild(section);
         main.appendChild(instructions);
@@ -82,7 +96,7 @@ async function renderQuestions(subject) {
             
             answersContainer.classList.add("answersContainer");
             // Set the question to the question container with a numbered prefix
-            question.setAttribute("class", `${currentQuestionType}${i}`);
+            question.setAttribute("class", `${currentSubjectTopic}${i}`);
             question.innerHTML = (i+1) + ". " + current[i].q;
             // Set classNames for all cards to cardContainer
             cardContainer.className = "cardContainer";
@@ -94,14 +108,14 @@ async function renderQuestions(subject) {
             for(let j = 0; j < answers.length; j++) { // loop for answers in the questions object
                 let answer = document.createElement("input");
                 let label = document.createElement("label");
-                let answerStr =  `${currentQuestionType}${i}${j}`; // Include the line item number to isolate the input group
+                let answerStr =  `${currentSubjectTopic}${i}${j}`; // Include the line item number to isolate the input group
                 
                 label.htmlFor = answerStr;
                 
                 // Creates the actual input element
                 answer.setAttribute("type", "radio");
                 answer.setAttribute("id", answerStr);
-                answer.setAttribute("name", `${currentQuestionType}${i}`);
+                answer.setAttribute("name", `${currentSubjectTopic}${i}`);
                 answer.setAttribute("value", answers[j]);
                 answer.setAttribute("data-index", j);
                 answer.addEventListener("change", e => {
@@ -124,5 +138,7 @@ async function renderQuestions(subject) {
     }
 } 
 
-
 // renderQuestions('english');
+
+// renderMultipleQuestions(), renderInputQuestions()
+
